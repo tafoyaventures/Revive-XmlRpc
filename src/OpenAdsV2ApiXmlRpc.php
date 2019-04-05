@@ -106,34 +106,24 @@ class OpenAdsV2ApiXmlRpc
     var $debug = '';
 
     /**
-     * pass array as first parameter to load it as the config
-     * if any parameter is not set, the config method will be used to try to use config from file
-     *
-     * @param string|array $host_config
-     * @param string $basepath
-     * @param string $username
-     * @param string $password
-     * @param int $port
-     * @param bool $ssl
-     * @param int $timeout
+     * @param string $host The name of the host to which to connect.
+     * @param string $basepath The base path to XML-RPC services.
+     * @param string $username The username to authenticate to the web services API.
+     * @param string $password The password for this user.
+     * @param int $port The port number. Use 0 to use standard ports which
+     *                          are port 80 for HTTP and port 443 for HTTPS.
+     * @param bool $ssl Set to true to connect using an SSL connection.
+     * @param int $timeout The timeout period to wait for a response.
      */
-    function __construct(
-        $host_config = null,
-        $basepath = null,
-        $username = null,
-        $password = null,
-        $port = null,
-        $ssl = null,
-        $timeout = null
-    ) {
-        $this->load_config($host_config);
-        $this->host = $host_config ?? $this->config('host');
-        $this->basepath = rtrim($basepath ?? $this->config('basepath'), '/');
-        $this->port = $port ?? $this->config('port', 0);
-        $this->timeout = $timeout ?? $this->config('timeout', 15);
-        $this->username = $username ?? $this->config('username');
-        $this->password = $password ?? $this->config('password');
-        $this->ssl = $ssl ?? $this->config('ssl', false);
+    function __construct($host, $basepath, $username, $password, $port = 0, $ssl = false, $timeout = 15)
+    {
+        $this->host = $host;
+        $this->basepath = rtrim($basepath, '/');
+        $this->port = $port;
+        $this->timeout = $timeout;
+        $this->username = $username;
+        $this->password = $password;
+        $this->ssl = $ssl;
         $this->_logon();
     }
 
